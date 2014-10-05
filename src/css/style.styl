@@ -1,0 +1,74 @@
+// Resets
+@import 'nib'
+global-reset()
+@import 'equalizr'
+
+*
+  box-sizing border-box
+
+percentage(n, c)
+  ((n / c) * 100) %
+
+col(col, context)
+  width percentage(col, context)
+  float left
+
+swanson-grid-columns(cols,gutter,prefix=null)
+  margin-left 0 - (gutter)px
+  margin-right 0 -(gutter)px
+  clearfix()
+
+  if prefix not null
+    for i in (1..cols)
+      & > .col-{prefix}-{i}
+        col(i,cols)
+        padding 0 (gutter)px
+  else
+    for i in (1..cols)
+      & > .col-{i}
+        col(i,cols)
+        padding 0 (gutter)px
+
+swanson-grid-shift(cols,gutter,prefix=null)
+  if prefix not null
+    for i in (1..cols)
+      & > .col-push-{prefix}-{i}
+        margin-left percentage(i, cols)
+      & > .col-pull-{prefix}-{i}
+        margin-left -(percentage(i, cols))
+  else
+    for i in (1..cols)
+      & > .col-push-{i}
+        margin-left percentage(i, cols)
+      & > .col-pull-{prefix}-{i}
+        margin-left -(percentage(i, cols))
+
+  // else has no prefix
+
+
+
+
+////////////////////////////////////////////////////////
+
+.container
+  background lightcoral
+  border 1px solid coral
+  cf()
+  max-width 960px
+  margin 0 auto
+
+.inner
+  background #5f9ea0
+  border 1px solid  #333
+  opacity 1
+
+
+.row-15
+  swanson-grid-columns(15,10,large)
+  swanson-grid-shift(15,10,large)
+
+@media (max-width: 600px)
+  .row-15
+    swanson-grid-columns(15,10,small)
+    swanson-grid-shift(15,10,small)
+
